@@ -20,13 +20,13 @@ from openai import OpenAI
 from flask_cors import CORS
 
 
-client = create_client("https://htbkghbygiyuncrzxkhq.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0YmtnaGJ5Z2l5dW5jcnp4a2hxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTkxMzYxNzIsImV4cCI6MjAzNDcxMjE3Mn0.2mEHWNDnAVEYEUUEE3fYKs-tDnG_zPEYK0tXIEXGdgE")
-openAIEmbeddings = OpenAIEmbeddings(api_key="sk-proj-U2u0ZwlySYaW8EhBcoyUT3BlbkFJsr7qJNd0Ok7sy4NQza17")
-llm = ChatOpenAI(model="gpt-4o", api_key="sk-proj-U2u0ZwlySYaW8EhBcoyUT3BlbkFJsr7qJNd0Ok7sy4NQza17")
+client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_KEY"])
+openAIEmbeddings = OpenAIEmbeddings(api_key=os.environ["OPENAI_API_KEY"])
+llm = ChatOpenAI(model="gpt-4o", api_key=os.environ["OPENAI_API_KEY"])
 vectorStore = SupabaseVectorStore(client, openAIEmbeddings, "documents")
-cred = credentials.Certificate("discovery-ai-8a80a-firebase-adminsdk-31es3-cb4df16eb9.json")
-firebase_admin.initialize_app(cred, {"storageBucket": "discovery-ai-8a80a.appspot.com"})
-openAIClient = OpenAI(api_key="sk-proj-U2u0ZwlySYaW8EhBcoyUT3BlbkFJsr7qJNd0Ok7sy4NQza17")
+cred = credentials.Certificate(os.environ["FIREBASE_CREDENTIALS_PATH"])
+firebase_admin.initialize_app(cred, {"storageBucket": os.environ["FIREBASE_STORAGE_BUCKET"]})
+openAIClient = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 allData = {}
 
 db = firestore.client()
