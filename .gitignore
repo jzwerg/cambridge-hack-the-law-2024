@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment / secrets
+.env
+.env.*
+*-firebase-adminsdk-*.json
+
+# Large video files
+*.mp4
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
